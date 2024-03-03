@@ -80,8 +80,8 @@ class DSINE_normals:
         
         pred_norm = self.model(images, intrins=intrins)[-1]
         pred_norm = pred_norm[:, :, t:t+orig_H, l:l+orig_W]
+        pred_norm = (pred_norm + 1.0) / 2.0
         pred_norm = pred_norm.permute(0, 2, 3, 1).cpu()
-        pred_norm = torch.clip(pred_norm, 0, 1)
         if not keep_model_loaded:
             self.model = None
             comfy.model_management.soft_empty_cache()
