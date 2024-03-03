@@ -3,10 +3,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from models.submodules import Encoder, ConvGRU, UpSampleBN, UpSampleGN, RayReLU, \
+from ..models.submodules import Encoder, ConvGRU, UpSampleBN, UpSampleGN, RayReLU, \
                                 convex_upsampling, get_unfold, get_prediction_head, \
                                 INPUT_CHANNELS_DICT
-from utils.rotation import axis_angle_to_matrix
+from ..utils.rotation import axis_angle_to_matrix
 
 
 class Decoder(nn.Module):
