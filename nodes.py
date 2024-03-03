@@ -38,11 +38,10 @@ class DSINE_normals:
     def process(self, images, fov, iterations, keep_model_loaded, intrinsics_string=""):
         batch_size = images.shape[0]
         device = comfy.model_management.get_torch_device()
-        dtype = torch.float16 if comfy.model_management.should_use_fp16() and not comfy.model_management.is_device_mps(device) else torch.float32
         
         checkpoint_path = os.path.join(script_directory, f"checkpoints/dsine.pt")
 
-        if not hasattr(self, "moondream") or self.moondream is None:
+        if not hasattr(self, "model") or self.model is None:
             from .models.dsine import DSINE
             self.model = DSINE().to(device)
             self.model.pixel_coords = self.model.pixel_coords.to(device)
@@ -52,7 +51,6 @@ class DSINE_normals:
         self.model.num_iter = iterations
         images = images.permute(0, 3, 1, 2).to(device)
         _, _, orig_H, orig_W = images.shape
-        images = images
 
         # zero-pad the input image so that both the width and height are multiples of 32
         l, r, t, b = pad_input(orig_H, orig_W)
@@ -79,7 +77,6 @@ class DSINE_normals:
         intrins[:, 0, 2] += l
         intrins[:, 1, 2] += t
         intrins = intrins.repeat(batch_size, 1, 1)
-        print(intrins.shape)
         
         pred_norm = self.model(images, intrins=intrins)[-1]
         pred_norm = pred_norm[:, :, t:t+orig_H, l:l+orig_W]
