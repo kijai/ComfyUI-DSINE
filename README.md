@@ -1,5 +1,13 @@
+# ComfyUI node for DSINE Surface Normal Estimation
 
-# Rethinking Inductive Biases for Surface Normal Estimation
+![image](https://github.com/kijai/ComfyUI-DSINE/assets/40791699/2954978b-f394-4c36-b6d1-ce9d9c207604)
+
+
+
+
+# Original repo:
+
+## Rethinking Inductive Biases for Surface Normal Estimation
 
 <p align="center">
   <img width=20% src="https://github.com/baegwangbin/DSINE/raw/main/docs/img/dsine/logo_with_outline.png">
