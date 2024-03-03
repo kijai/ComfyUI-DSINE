@@ -21,6 +21,7 @@ class DSINE_normals:
             "images": ("IMAGE", ),
             "fov": ("INT", {"default": 60, "min": 0, "max": 360}),
             "iterations": ("INT", {"default": 5, "min": 1, "max": 1024}),
+            "normalize_output": ("BOOLEAN", {"default": True}),
             "keep_model_loaded": ("BOOLEAN", {"default": True}),
             
             },
@@ -35,7 +36,7 @@ class DSINE_normals:
 
     CATEGORY = "DSINE"
 
-    def process(self, images, fov, iterations, keep_model_loaded, intrinsics_string=""):
+    def process(self, images, fov, iterations, keep_model_loaded, normalize_output, intrinsics_string=""):
         batch_size = images.shape[0]
         device = comfy.model_management.get_torch_device()
         
@@ -80,7 +81,8 @@ class DSINE_normals:
         
         pred_norm = self.model(images, intrins=intrins)[-1]
         pred_norm = pred_norm[:, :, t:t+orig_H, l:l+orig_W]
-        pred_norm = (pred_norm + 1.0) / 2.0
+        if normalize_output:
+            pred_norm = (pred_norm + 1.0) / 2.0
         pred_norm = pred_norm.permute(0, 2, 3, 1).cpu()
         if not keep_model_loaded:
             self.model = None
