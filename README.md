@@ -1,7 +1,6 @@
 # ComfyUI node for DSINE Surface Normal Estimation
 
-![image](https://github.com/kijai/ComfyUI-DSINE/assets/40791699/2954978b-f394-4c36-b6d1-ce9d9c207604)
-
+![image](https://github.com/kijai/ComfyUI-DSINE/assets/40791699/cc8a1f01-92ad-4c6a-afa7-ee8fc62409d3)
 
 
 
